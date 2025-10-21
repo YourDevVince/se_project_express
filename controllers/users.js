@@ -38,7 +38,9 @@ const getUserById = (req, res) => {
         return res.status(BAD_REQUEST).send({ message: "Invalid user ID" });
       }
 
-      return res.status(DEFAULT_ERROR).send({ message: err.message });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: "An error has occurred on the server" });
     });
 };
 
