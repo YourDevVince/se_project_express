@@ -35,16 +35,21 @@ const deleteClothingItem = (req, res) => {
   const { itemId } = req.params;
 
   clothingItem
-    .findByIdAndDelete(itemId)
+    .findById(itemId)
     .then((item) => {
       if (!item) {
-        return res
-          .status(NOT_FOUND)
-          .send({ message: "Clothing item not found" });
+        return res.status(NOT_FOUND).send({ message: "Clothing item not found" });
       }
-      return res
-        .status(200)
-        .send({ message: "Clothing item deleted successfully" });
+
+      
+      if (String(item.owner) !== String(req.user._id)) {
+        return res.status(403).send({ message: "Forbidden: not the owner" });
+      }
+
+      
+      return item.deleteOne().then(() => {
+        res.status(200).send({ message: "Clothing item deleted successfully" });
+      });
     })
     .catch((err) => {
       console.error(err);
