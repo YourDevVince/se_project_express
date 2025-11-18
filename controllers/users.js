@@ -69,7 +69,7 @@ const login = (req, res) => {
 };
 
 const getCurrentUser = (req, res) => {
-  return User.findById(req.user._id)
+  User.findById(req.user._id)
     .then((user) => {
       if (!user) {
         return res.status(NOT_FOUND).send({ message: 'User not found' });
