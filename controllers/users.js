@@ -44,26 +44,22 @@ const login = (req, res) => {
 
   const normalizedEmail = String(email).toLowerCase();
 
-  return User.findOne({ email: normalizedEmail })
-    .select('+password')
+  return User.findUserByCredentials(normalizedEmail, password)
     .then((user) => {
-      if (!user) {
-        return Promise.reject(new Error('AUTH'));
-      }
-      return bcrypt.compare(password, user.password).then((matched) => {
-        if (!matched) {
-          return Promise.reject(new Error('AUTH'));
-        }
-        const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
-        return res.send({ token });
-      });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      return res.send({ token });
     })
     .catch((err) => {
-      if (err.message === 'AUTH') {
-        return res.status(UNAUTHORIZED).send({ message: 'Incorrect email or password' });
+      if (err.message === 'Incorrect email or password') {
+        return res
+          .status(UNAUTHORIZED)
+          .send({ message: 'Incorrect email or password' });
       }
+
       console.error(err);
-      return res.status(DEFAULT_ERROR).send({ message: 'An error has occurred on the server' });
+      return res
+        .status(DEFAULT_ERROR)
+        .send({ message: 'An error has occurred on the server' });
     });
 };
 
