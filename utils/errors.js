@@ -1,11 +1,16 @@
 const BAD_REQUEST = 400;
+const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
 const DEFAULT_ERROR = 500;
 const FORBIDDEN = 403;
+const CONFLICT = 409;
+
 
 module.exports = {
   BAD_REQUEST,
   NOT_FOUND,
   DEFAULT_ERROR,
   FORBIDDEN,
+  UNAUTHORIZED,
+  CONFLICT,
 };

@@ -1,5 +1,5 @@
 const clothingItem = require("../models/clothingItem");
-const { BAD_REQUEST, NOT_FOUND, DEFAULT_ERROR } = require("../utils/errors");
+const { BAD_REQUEST, NOT_FOUND, DEFAULT_ERROR,FORBIDDEN } = require("../utils/errors");
 
 const getClothingItems = (req, res) => {
   clothingItem
@@ -43,7 +43,7 @@ const deleteClothingItem = (req, res) => {
 
       
       if (String(item.owner) !== String(req.user._id)) {
-        return res.status(403).send({ message: "Forbidden: not the owner" });
+        return res.status(FORBIDDEN).send({ message: "Forbidden: not the owner" });
       }
 
       
