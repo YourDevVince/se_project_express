@@ -6,6 +6,9 @@ npm-debug.log*
 # Dependency directory
 node_modules
 
+# Dump directory
+wtwr_dump
+
 # Optional npm cache directory
 .npm
 
