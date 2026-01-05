@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const mainRouter = require("./routes");
+const errorHandler = require("./middlewares/error-handler");
+const { errors } = require("celebrate");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -11,11 +13,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", mainRouter);
+app.use(errors());
+app.use(errorHandler);
 
 // githubs test rejected me using const { MONGODB_URI } = require("./utils/config");
 // so I hardcoded the MongoDB connection string here
 mongoose
-  .connect("mongodb://localhost:27017/wtwr_db") 
+  .connect("mongodb://localhost:27017/wtwr_db")
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
