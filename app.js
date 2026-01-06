@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { MONGODB_URI } = require("./utils/config");
 const mainRouter = require("./routes");
 const errorHandler = require("./middlewares/error-handler");
 const { errors } = require("celebrate");
@@ -23,7 +25,7 @@ app.use(errorHandler);
 // githubs test rejected me using const { MONGODB_URI } = require("./utils/config");
 // so I hardcoded the MongoDB connection string here
 mongoose
-  .connect("mongodb://localhost:27017/wtwr_db")
+  .connect(MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {

@@ -16,3 +16,6 @@ wtwr_dump
 .DS_Store
 .idea
 .vscode
+
+# env
+.env
