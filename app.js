@@ -27,8 +27,6 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-// githubs test rejected me using const { MONGODB_URI } = require("./utils/config");
-// so I hardcoded the MongoDB connection string here
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
