@@ -9,8 +9,6 @@ const validateUrl = (value, helpers) => {
   return helpers.message("Must be a valid URL with http:// or https://");
 };
 
-const objectId = Joi.string().hex().length(24);
-
 const validateClothingItemBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
